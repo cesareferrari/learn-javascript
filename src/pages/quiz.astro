@@ -30,20 +30,31 @@ import Header from '../components/header.astro'
 
 
 
-<script>
+<script is:inline>
 
     // TODO 1: Declare & assign variables pointing to the corresponding element(s)
-    // statement should be the "statement" div
-    // optionButtons should be all the elements within the "options" div
-    // explanation should be the "explanation" div
 
+    // statement should be the "statement" div
+    const statement = document.querySelector("#statement");
+
+    // optionButtons should be all the elements within the "options" div
+    const optionButtons = document.querySelectorAll("#options button");
+
+    // explanation should be the "explanation" div
+    const explanation = document.querySelector("#explanation");
 
     // TODO 2: Declare & assign a variable called fact
     // Its value should be an object with a statement, true/false answer, and explanation 
 
+    const fact = {
+        statement: "1 + 1 === 2",
+        answer: true,
+        explanation: "These two expressions are equivalent"
+    }
 
 
     // TODO 3: Set the text of the statement element to the fact's statement
+    statement.textContent =  fact.statement;
 
 
 
