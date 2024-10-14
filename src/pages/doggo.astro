@@ -72,7 +72,13 @@ import Header from '../components/header.astro'
     function getBreedFromURL(url) {
         // The string method .split(char) may come in handy
         // Try to use destructuring as much as you can
-        
+     // the 5th element in the array,
+     // which is the breed name possibly in 2 words separated by `-`
+     let [,,,,breedName] = url.split("/");  
+
+     // split the breed name if there is a `-` (also works if it's one word)
+     let breed = breedName.split("-").reverse().join(" ");
+     return breed
     }
 
 
