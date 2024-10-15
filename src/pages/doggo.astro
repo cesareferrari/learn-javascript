@@ -23,8 +23,51 @@ import Header from '../components/header.astro'
   
 </Layout>
 
+  <style is:inline>
+      header {
+          width: 70%;
+          margin: 1em auto;
+      }
+      main {
+          max-width: 70%;
+          margin: 0px auto;
+          display:flex; 
+          flex-direction: column;
+      }
+      img {
+          max-width: 100%;
+      }
+      #image-frame {
+          font-size: x-large;
+          text-align: center;
+          margin: 1rem auto;
+      }
+      #explanation, #score {
+          padding: 1rem;
+          text-align: center;
+      }
+      #options {
+          max-width: 100%;
+          display: flex;
+          flex-direction: column;
+      }
+      button {
+          padding: 0.5rem;
+          font-size: medium;
+          border-radius: 5px;
+      }
+      .correct {
+          background-color: lightgreen;
+      }
+      .incorrect {
+          background-color: lightpink;
+      }
+      .hidden {
+          display: none;
+      }
+  </style>
 
-  <script is:inline>
+  <script is:inline type="module">
 
     const RANDOM_IMG_ENDPOINT = "https://dog.ceo/api/breeds/image/random";
 
@@ -88,7 +131,16 @@ import Header from '../components/header.astro'
     // then parse the response as a JSON object,
     // finally return the "message" property of its body
     async function fetchMessage(url) {
-        
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        console.error("An error happened.");
+      }
+
+      const body = await response.json();
+      const {message} = body;
+
+      return message;
     }
 
 
@@ -113,6 +165,15 @@ import Header from '../components/header.astro'
         // Create a button element whose name, value, and textContent properties are the value of that choice,
         // attach a "click" event listener with the buttonHandler function,
         // and append the button as a child of the options element
+        for (let choice of choicesArray) {
+          const button = document.createElement("button");
+          button.name = choice;
+          button.value = choice;
+          button.textContent = choice;
+
+          button.addEventListener("click", buttonHandler);
+          options.appendChild(button);
+        }
         
     }
 
@@ -145,52 +206,8 @@ import Header from '../components/header.astro'
     // TODO 5
     // Asynchronously call the loadQuizData() function,     
     // Then call renderQuiz() with the returned imageUrl, correctAnswer, and choices 
-    
-    
-
+    const [imgUrl, correctAnswer, choices] = await loadQuizData(); 
+    renderQuiz(imgUrl, correctAnswer, choices);
 
   </script>
 
-    <style>
-        header {
-            width: 70%;
-            margin: 1em auto;
-        }
-        main {
-            max-width: 70%;
-            margin: 0px auto;
-            display:flex; 
-            flex-direction: column;
-        }
-        img {
-            max-width: 100%;
-        }
-        #image-frame {
-            font-size: x-large;
-            text-align: center;
-            margin: 1rem auto;
-        }
-        #explanation, #score {
-            padding: 1rem;
-            text-align: center;
-        }
-        #options {
-            max-width: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        button {
-            padding: 0.5rem;
-            font-size: medium;
-            border-radius: 5px;
-        }
-        .correct {
-            background-color: lightgreen;
-        }
-        .incorrect {
-            background-color: lightpink;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
