@@ -1,0 +1,108 @@
+<!doctype html>
+<html data-theme="dark">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="icon" type="image/svg+xml" href="https://anjana.dev/vanilla-js-projects/favicon.svg">
+
+	<title>Random Clock | Vanilla JS Projects</title>
+
+  <link rel="stylesheet" crossorigin href="/pico.css">
+  <link rel="stylesheet" crossorigin href="/spacing.css">
+
+</head>
+
+<body class="container">
+	<header>
+		<h1>random clock</h1>
+	</header>
+
+	<main class="container">
+		<article>
+			<div id="clock">
+				<p id="time"></p>
+
+			</div>
+		</article>
+	</main>
+
+	<footer>
+		<a href="/">Back to Home</a>
+	</footer>
+</body>
+
+</html>
+
+
+<script is:inline id="clock.js">
+
+	/**
+ * Randomly shuffle an array
+ * https://stackoverflow.com/a/2450976/1293256
+ * @param  {Array} array The array to shuffle
+ * @return {Array}       The shuffled array
+ */
+	function shuffle (array) {
+
+		let currentIndex = array.length;
+		let temporaryValue, randomIndex;
+
+		// While there remain elements to shuffle...
+		while (0 !== currentIndex) {
+			// Pick a remaining element...
+			randomIndex = Math.floor(Math.random() * currentIndex);
+			currentIndex -= 1;
+
+			// And swap it with the current element.
+			temporaryValue = array[currentIndex];
+			array[currentIndex] = array[randomIndex];
+			array[randomIndex] = temporaryValue;
+		}
+
+		return array;
+	}
+
+	/**
+ * Get a random integer with a minimum and maximum value
+ * (c) Chris Ferdinandi, MIT License, https://gomakethings.com
+ * @param  {Integer} min  The minimum value
+ * @param  {Integer} max  The maximum value
+ * @return {Integer}      A random number
+ */
+	function randomNumber (min = 0, max = 1000) {
+		return Math.floor(Math.random() * (max - min + 1) + min);
+	}
+
+
+
+	const p = document.querySelector("#time");
+	const colors = ["white", "gray", "silver", "maroon", "red", "purple", "fushsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal", "aqua"]
+
+  function changeClock () {
+		currentTime = new Date().toLocaleTimeString();
+		p.textContent = currentTime;
+		p.style.top = `${randomNumber(0, 200)}px`;
+		p.style.left = `${randomNumber(0, 300)}px`;
+		p.style.color = shuffle(colors)[0];
+	}
+
+	setInterval(changeClock, 3000);
+
+</script>
+
+
+<style>
+	#clock {
+		width: 100%;
+		height: 50vh;
+		position: relative;
+	}
+
+	#clock p {
+		width: 200px;
+		position: absolute;
+		font-size: xx-large;
+	}
+</style>
