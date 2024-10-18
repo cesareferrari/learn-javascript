@@ -43,23 +43,17 @@
 		<script is:inline id="theme.js">
 			const htmlElement = document.querySelector("html");
 
-			toggle.addEventListener("change", (event) => {
-			  const toggle = event.target;
+			function toggleTheme () {
+			  const currentTheme = htmlElement.getAttribute("data-theme");
+				const newTheme = currentTheme === "dark" ? "light" : "dark";
+				htmlElement.setAttribute("data-theme", newTheme);
+			}
 
-				if (toggle.hasAttribute("checked")) {
-				  htmlElement.dataset["theme"] = "dark";
-				} else {
-				  htmlElement.dataset["theme"] = "light";
-				}
-			})
+			const toggle = document.querySelector("#toggle");
+			toggle.addEventListener("change", toggleTheme);
 
 		</script>
 
-
-
 	</body>
 </html>
-
-
-
 
