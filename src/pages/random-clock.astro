@@ -37,55 +37,24 @@
 
 
 <script is:inline id="clock.js">
-
-	/**
- * Randomly shuffle an array
- * https://stackoverflow.com/a/2450976/1293256
- * @param  {Array} array The array to shuffle
- * @return {Array}       The shuffled array
- */
-	function shuffle (array) {
-
-		let currentIndex = array.length;
-		let temporaryValue, randomIndex;
-
-		// While there remain elements to shuffle...
-		while (0 !== currentIndex) {
-			// Pick a remaining element...
-			randomIndex = Math.floor(Math.random() * currentIndex);
-			currentIndex -= 1;
-
-			// And swap it with the current element.
-			temporaryValue = array[currentIndex];
-			array[currentIndex] = array[randomIndex];
-			array[randomIndex] = temporaryValue;
-		}
-
-		return array;
-	}
-
-	/**
- * Get a random integer with a minimum and maximum value
- * (c) Chris Ferdinandi, MIT License, https://gomakethings.com
- * @param  {Integer} min  The minimum value
- * @param  {Integer} max  The maximum value
- * @return {Integer}      A random number
- */
-	function randomNumber (min = 0, max = 1000) {
-		return Math.floor(Math.random() * (max - min + 1) + min);
-	}
-
-
-
 	const p = document.querySelector("#time");
-	const colors = ["white", "gray", "silver", "maroon", "red", "purple", "fushsia", "green", "lime", "olive", "yellow", "navy", "blue", "teal", "aqua"]
+
+	const [s, l] = ["75%", "75%"];
 
   function changeClock () {
+	  const topOffset = Math.random() * 100;
+	  const leftOffset = Math.random() * 100;
+		const h = Math.random() * 360;
+
 		currentTime = new Date().toLocaleTimeString();
+		
 		p.textContent = currentTime;
-		p.style.top = `${randomNumber(0, 200)}px`;
-		p.style.left = `${randomNumber(0, 300)}px`;
-		p.style.color = shuffle(colors)[0];
+
+		p.setAttribute("style", `color: hsl(${h} ${s} ${l}); top: ${topOffset}%; left: ${leftOffset}%`);
+
+		//p.style.top = `${randomNumber(0, 200)}px`;
+		//p.style.left = `${randomNumber(0, 300)}px`;
+		//p.style.color = shuffle(colors)[0];
 	}
 
 	setInterval(changeClock, 3000);
@@ -102,7 +71,7 @@
 
 	#clock p {
 		width: 200px;
-		position: absolute;
+		position: relative;
 		font-size: xx-large;
 	}
 </style>
