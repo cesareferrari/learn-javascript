@@ -75,6 +75,8 @@
 			  this.element.appendChild(this.closeButton);
 				this.element.setAttribute("type", type);
 				this.heading.textContent = title;
+				this.closeButton.setAttribute("type", "submit");
+				this.closeButton.textContent = "Close";
 			}
 
 		}
@@ -85,8 +87,13 @@
 
 			constructor(name, parentElement, contentElement) {
 				// Set up the instance object
+				this.name = name;
+				this.openButton.setAttribute("id", name);
+				this.openButton.textContent = name;
+				this.parent = parentElement;
+				this.content = contentElement;
 				this.#setupForm();
-				console.error('Modal constructor not implemented')
+				this.#registerOpenListener();
 			}
 
 			#setupForm() {
@@ -94,12 +101,26 @@
 				const form = new Form('dialog', this.name, this.content);
 				article.appendChild(form.element);
 				this.dialog.appendChild(article);
+
+        const dialog = this.dialog;
+				form.element.addEventListener("submit", function (event) {
+				  event.preventDefault();
+					dialog.close();
+				})
+			}
+
+			#registerOpenListener() {
+			  const dialog = this.dialog;
+				this.openButton.addEventListener("click", () => {
+				  dialog.showModal();
+				})
 			}
 
 
 			render() {
 				// Attach the elements to the DOM
-				console.error('render method not implemented')
+				this.parent.replaceChildren(this.openButton);
+				this.parent.appendChild(this.dialog);
 			}
 		}
 
@@ -108,7 +129,6 @@
 		const content = document.getElementById('dark-mode');
 		const darkModal = new Modal('Settings', parent, content);
 		darkModal.render();
-
 
 	</script>
 
